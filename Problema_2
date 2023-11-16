@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define longitud 3
+
+void llenarMatriz(int matriz[longitud][longitud]) {
+    for (int i = 0; i < longitud; ++i) {
+        for (int j = 0; j < longitud; ++j) {
+            printf("Posicion (%d,%d): ", i, j);
+            scanf("%d", &matriz[i][j]);
+        }
+    }
+}
+
+void imprimirMatriz(int matriz[longitud][longitud]) {
+    for (int i = 0; i < longitud; ++i) {
+        for (int j = 0; j < longitud; ++j) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int sumaFila(int matriz[longitud][longitud], int fila) {
+    int suma = 0;
+    for (int j = 0; j < longitud; ++j) {
+        suma += matriz[fila][j];
+    }
+    return suma;
+}
+
+int sumaColumna(int matriz[longitud][longitud], int columna) {
+    int suma = 0;
+    for (int i = 0; i < longitud; ++i) {
+        suma += matriz[i][columna];
+    }
+    return suma;
+}
+
+int sumaDiagonalPrincipal(int matriz[longitud][longitud]) {
+    int suma = 0;
+    for (int i = 0; i < longitud; ++i) {
+        suma += matriz[i][i];
+    }
+    return suma;
+}
+
+int sumaDiagonalSecundaria(int matriz[longitud][longitud]) {
+    int suma = 0;
+    for (int i = 0; i < longitud; ++i) {
+        suma += matriz[i][longitud - 1 - i];
+    }
+    return suma;
+}
+
+int MatrizMagica(int matriz[longitud][longitud]) {
+    int sumaReferencia = sumaFila(matriz, 0);
+    
+    for (int i = 1; i < longitud; ++i) {
+        if (sumaFila(matriz, i) != sumaReferencia) return 0;
+    }
+
+    for (int j = 0; j < longitud; ++j) {
+        if (sumaColumna(matriz, j) != sumaReferencia) return 0;
+    }
+
+    if (sumaDiagonalPrincipal(matriz) != sumaReferencia || sumaDiagonalSecundaria(matriz) != sumaReferencia) {
+        return 0;
+    }
+    
+    return 1;
+}
+
+
+int main() {
+    int matriz[longitud][longitud];
+    
+    printf("Ingrese los valores de la matriz de %dx%d:\n", longitud, longitud);
+    llenarMatriz(matriz);
+    
+    printf("\nMatriz ingresada:\n");
+    imprimirMatriz(matriz);
+    
+    for (int i = 0; i < longitud; ++i) {
+        printf("Suma de la fila %d: %d\n", i + 1, sumaFila(matriz, i));
+    }
+
+    for (int j = 0; j < longitud; ++j) {
+        printf("Suma de la columna %d: %d\n", j + 1, sumaColumna(matriz, j));
+    }
+
+    printf("Suma de la diagonal: %d\n", sumaDiagonalPrincipal(matriz));
+    printf("Suma de la diagonal secundaria: %d\n", sumaDiagonalSecundaria(matriz));
+    
+    
+    if (MatrizMagica(matriz)) {
+        printf("\nLa matriz es magica.\n");
+    } else {
+        printf("\nLa matriz no es magica.\n");
+    }
+    
+    return 0;
+}
+
+
