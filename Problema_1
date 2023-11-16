@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define FILAS 5
+#define COLUMNAS 7
+
+void imprimirMatriz(int matriz[FILAS][COLUMNAS]) {
+    for (int i = 0; i < FILAS; i++) {
+        for (int j = 0; j < COLUMNAS; j++) {
+            matriz[i][j] = rand() % 10; 
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n"); 
+    }
+    printf("\n");
+}
+
+int sumaDiagonal(int matriz[FILAS][COLUMNAS]) {
+    int total = 0;
+    for (int i = 0; i < FILAS; i++) {
+        total += matriz[i][i];
+    }
+    return total;
+}
+
+int sumaFila(int matriz[FILAS][COLUMNAS], int fila) {
+    int total = 0;
+    for (int j = 0; j < COLUMNAS; j++) {
+        total += matriz[fila][j];
+    }
+    return total;
+}
+
+int sumaColumna(int matriz[FILAS][COLUMNAS], int col) {
+    int total = 0;
+    for (int i = 0; i < FILAS; i++) {
+        total += matriz[i][col];
+    }
+    return total;
+}
+
+void sumaFilasPares(int matriz[FILAS][COLUMNAS]) {
+    for (int i = 1; i < FILAS; i += 2) { 
+        printf("La suma de la fila par %d: %d\n", i + 1, sumaFila(matriz, i)); 
+    }
+}
+
+int sumaTodasFilasPares(int matriz[FILAS][COLUMNAS]) {
+    int total = 0;
+    for (int i = 1; i < FILAS; i += 2) {
+        total += sumaFila(matriz, i);
+    }
+    return total;
+}
+
+void sumaColumnasImpares(int matriz[FILAS][COLUMNAS]) {
+    for (int j = 0; j < COLUMNAS; j += 2) { 
+        printf("La suma de la columna impar %d: %d\n", j + 1, sumaColumna(matriz, j)); 
+    }
+}
+
+int sumaTodasColumnasImpares(int matriz[FILAS][COLUMNAS]) {
+    int total = 0;
+    for (int j = 0; j < COLUMNAS; j += 2) { 
+        total += sumaColumna(matriz, j);
+    }
+    return total;
+}
+
+int sumaTriangularSuperior(int matriz[FILAS][COLUMNAS]) {
+    int total = 0;
+    for (int i = 0; i < FILAS; i++) {
+        for (int j = i; j < COLUMNAS; j++) { 
+            total += matriz[i][j];
+        }
+    }
+    return total;
+}
+
+int sumaTriangularInferior(int matriz[FILAS][COLUMNAS]) {
+    int total = 0;
+    for (int i = 0; i < FILAS; i++) { 
+        for (int j = 0; j <= i; j++) { 
+            total += matriz[i][j];
+        }
+    }
+    return total;
+}
+
+int main() {
+    srand(time(NULL));
+    
+    int matriz[FILAS][COLUMNAS];
+    
+    imprimirMatriz(matriz);
+    
+    printf("La suma de la diagonal principal es: %d\n", sumaDiagonal(matriz));
+    printf("La suma de la fila 1: %d\n", sumaFila(matriz, 0));
+    printf("La suma de la columna 7: %d\n", sumaColumna(matriz, COLUMNAS - 1));
+    printf("----------------------------------------------------------\n");
+    
+    sumaFilasPares(matriz);
+    printf("La suma de las filas pares: %d\n", sumaTodasFilasPares(matriz));
+    printf("----------------------------------------------------------\n");
+    
+    sumaColumnasImpares(matriz);
+    printf("La suma de las columnas impares: %d\n", sumaTodasColumnasImpares(matriz));
+    printf("----------------------------------------------------------\n");
+    
+    printf("La suma de la diagonal principal es: %d\n", sumaDiagonal(matriz));
+    printf("La suma del triangular superior : %d\n", sumaTriangularSuperior(matriz));
+    printf("----------------------------------------------------------\n");
+    
+    printf("La suma de la diagonal principal es: %d\n", sumaDiagonal(matriz));
+    printf("La suma del triangular inferior : %d\n", sumaTriangularInferior(matriz));
+    
+    
+    return 0;
+}
+
+
